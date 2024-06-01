@@ -1,3 +1,505 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/**
+*  * ============== TAILWIND BASE ============== 
+*/
+@layer base {
+    html {
+        font-size: 100%;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-normal text-base;
+    }
+
+    /* * ===== TYPOGRAPHY ===== */
+    *,
+    *::after,
+    *::before {
+        font-family: "Roboto", sans-serif;
+    }
+
+    h1 {
+        @apply font-black text-5xl;
+    }
+
+    h2 {
+        @apply font-bold text-4xl;
+    }
+
+    h3 {
+        @apply font-semibold text-3xl;
+    }
+
+    h4 {
+        @apply font-semibold text-2xl;
+    }
+
+    h5 {
+        @apply font-semibold text-xl;
+    }
+
+    h6 {
+        @apply font-medium text-lg;
+    }
+
+    [role="title"] {
+        @apply font-bold first-letter:uppercase;
+    }
+
+    [role="sub-title"] {
+        @apply font-medium first-letter:uppercase;
+    }
+
+    /* * ===== COLORS ===== */
+    body {
+        @apply bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    [role="title"],
+    [role="sub-title"],
+    [role="heading"],
+    label {
+        @apply text-gray-950 dark:text-white;
+    }
+
+    [role="header"],
+    [role="sidebar"] {
+        @apply bg-white dark:bg-gray-800;
+    }
+
+    [role="section"] {
+        @apply bg-gray-50 dark:bg-gray-900;
+    }
+
+    [role="modal"] {
+        @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    }
+
+    [role="modal-backdrop"] {
+        @apply bg-gray-900 opacity-50 dark:opacity-80;
+    }
+
+    /* * ===== SCROLLBAR ===== */
+    *::-webkit-scrollbar {
+        @apply w-2;
+    }
+
+    *::-webkit-scrollbar-track {
+        @apply bg-gray-300;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        @apply bg-gray-400 rounded-lg;
+    }
+}
+
+/**
+*  * ============== TAILWIND COMPONENTS ============== 
+*/
+@layer components {
+    /* * ===== BUTTON ===== */
+    [role="button"] {
+        @apply inline-flex items-center gap-2 px-4 py-2 transition duration-150 ease-in-out border focus-visible:outline-none;
+    }
+
+    [role="icon-button"] {
+        @apply inline-block p-2 transition duration-150 ease-in-out border focus-visible:outline-none;
+    }
+
+    [b-icon-position="start"] {
+        @apply flex-row;
+    }
+
+    [b-icon-position="end"] {
+        @apply flex-row-reverse;
+    }
+
+    [b-variant="contained"][b-color="slate"] {
+        @apply text-white bg-slate-600 hover:bg-slate-700 focus-visible:bg-slate-700 dark:bg-slate-600 dark:hover:bg-slate-500 dark:focus-visible:bg-slate-500 border-slate-600 hover:border-slate-700 focus-visible:border-slate-700 dark:border-slate-600 dark:hover:border-slate-500 focus-visible:hover:border-slate-500;
+    }
+
+    [b-variant="contained"][b-color="gray"] {
+        @apply text-white bg-gray-600 hover:bg-gray-700 focus-visible:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus-visible:bg-gray-500 border-gray-600 hover:border-gray-700 focus-visible:border-gray-700 dark:border-gray-600 dark:hover:border-gray-500 focus-visible:hover:border-gray-500;
+    }
+
+    [b-variant="contained"][b-color="zinc"] {
+        @apply text-white bg-zinc-600 hover:bg-zinc-700 focus-visible:bg-zinc-700 dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:focus-visible:bg-zinc-500 border-zinc-600 hover:border-zinc-700 focus-visible:border-zinc-700 dark:border-zinc-600 dark:hover:border-zinc-500 focus-visible:hover:border-zinc-500;
+    }
+
+    [b-variant="contained"][b-color="neutral"] {
+        @apply text-white bg-neutral-600 hover:bg-neutral-700 focus-visible:bg-neutral-700 dark:bg-neutral-600 dark:hover:bg-neutral-500 dark:focus-visible:bg-neutral-500 border-neutral-600 hover:border-neutral-700 focus-visible:border-neutral-700 dark:border-neutral-600 dark:hover:border-neutral-500 focus-visible:hover:border-neutral-500;
+    }
+
+    [b-variant="contained"][b-color="stone"] {
+        @apply text-white bg-stone-600 hover:bg-stone-700 focus-visible:bg-stone-700 dark:bg-stone-600 dark:hover:bg-stone-500 dark:focus-visible:bg-stone-500 border-stone-600 hover:border-stone-700 focus-visible:border-stone-700 dark:border-stone-600 dark:hover:border-stone-500 focus-visible:hover:border-stone-500;
+    }
+
+    [b-variant="contained"][b-color="red"] {
+        @apply text-white bg-red-600 hover:bg-red-700 focus-visible:bg-red-700 dark:bg-red-600 dark:hover:bg-red-500 dark:focus-visible:bg-red-500 border-red-600 hover:border-red-700 focus-visible:border-red-700 dark:border-red-600 dark:hover:border-red-500 focus-visible:hover:border-red-500;
+    }
+
+    [b-variant="contained"][b-color="orange"] {
+        @apply text-white bg-orange-600 hover:bg-orange-700 focus-visible:bg-orange-700 dark:bg-orange-600 dark:hover:bg-orange-500 dark:focus-visible:bg-orange-500 border-orange-600 hover:border-orange-700 focus-visible:border-orange-700 dark:border-orange-600 dark:hover:border-orange-500 focus-visible:hover:border-orange-500;
+    }
+
+    [b-variant="contained"][b-color="amber"] {
+        @apply text-white bg-amber-600 hover:bg-amber-700 focus-visible:bg-amber-700 dark:bg-amber-600 dark:hover:bg-amber-500 dark:focus-visible:bg-amber-500 border-amber-600 hover:border-amber-700 focus-visible:border-amber-700 dark:border-amber-600 dark:hover:border-amber-500 focus-visible:hover:border-amber-500;
+    }
+
+    [b-variant="contained"][b-color="yellow"] {
+        @apply text-white bg-yellow-600 hover:bg-yellow-700 focus-visible:bg-yellow-700 dark:bg-yellow-600 dark:hover:bg-yellow-500 dark:focus-visible:bg-yellow-500 border-yellow-600 hover:border-yellow-700 focus-visible:border-yellow-700 dark:border-yellow-600 dark:hover:border-yellow-500 focus-visible:hover:border-yellow-500;
+    }
+
+    [b-variant="contained"][b-color="lime"] {
+        @apply text-white bg-lime-600 hover:bg-lime-700 focus-visible:bg-lime-700 dark:bg-lime-600 dark:hover:bg-lime-500 dark:focus-visible:bg-lime-500 border-lime-600 hover:border-lime-700 focus-visible:border-lime-700 dark:border-lime-600 dark:hover:border-lime-500 focus-visible:hover:border-lime-500;
+    }
+
+    [b-variant="contained"][b-color="green"] {
+        @apply text-white bg-green-600 hover:bg-green-700 focus-visible:bg-green-700 dark:bg-green-600 dark:hover:bg-green-500 dark:focus-visible:bg-green-500 border-green-600 hover:border-green-700 focus-visible:border-green-700 dark:border-green-600 dark:hover:border-green-500 focus-visible:hover:border-green-500;
+    }
+
+    [b-variant="contained"][b-color="emerald"] {
+        @apply text-white bg-emerald-600 hover:bg-emerald-700 focus-visible:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus-visible:bg-emerald-500 border-emerald-600 hover:border-emerald-700 focus-visible:border-emerald-700 dark:border-emerald-600 dark:hover:border-emerald-500 focus-visible:hover:border-emerald-500;
+    }
+
+    [b-variant="contained"][b-color="teal"] {
+        @apply text-white bg-teal-600 hover:bg-teal-700 focus-visible:bg-teal-700 dark:bg-teal-600 dark:hover:bg-teal-500 dark:focus-visible:bg-teal-500 border-teal-600 hover:border-teal-700 focus-visible:border-teal-700 dark:border-teal-600 dark:hover:border-teal-500 focus-visible:hover:border-teal-500;
+    }
+
+    [b-variant="contained"][b-color="cyan"] {
+        @apply text-white bg-cyan-600 hover:bg-cyan-700 focus-visible:bg-cyan-700 dark:bg-cyan-600 dark:hover:bg-cyan-500 dark:focus-visible:bg-cyan-500 border-cyan-600 hover:border-cyan-700 focus-visible:border-cyan-700 dark:border-cyan-600 dark:hover:border-cyan-500 focus-visible:hover:border-cyan-500;
+    }
+
+    [b-variant="contained"][b-color="sky"] {
+        @apply text-white bg-sky-600 hover:bg-sky-700 focus-visible:bg-sky-700 dark:bg-sky-600 dark:hover:bg-sky-500 dark:focus-visible:bg-sky-500 border-sky-600 hover:border-sky-700 focus-visible:border-sky-700 dark:border-sky-600 dark:hover:border-sky-500 focus-visible:hover:border-sky-500;
+    }
+
+    [b-variant="contained"][b-color="blue"] {
+        @apply text-white bg-blue-600 hover:bg-blue-700 focus-visible:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 dark:focus-visible:bg-blue-500 border-blue-600 hover:border-blue-700 focus-visible:border-blue-700 dark:border-blue-600 dark:hover:border-blue-500 focus-visible:hover:border-blue-500;
+    }
+
+    [b-variant="contained"][b-color="indigo"] {
+        @apply text-white bg-indigo-600 hover:bg-indigo-700 focus-visible:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 dark:focus-visible:bg-indigo-500 border-indigo-600 hover:border-indigo-700 focus-visible:border-indigo-700 dark:border-indigo-600 dark:hover:border-indigo-500 focus-visible:hover:border-indigo-500;
+    }
+
+    [b-variant="contained"][b-color="violet"] {
+        @apply text-white bg-violet-600 hover:bg-violet-700 focus-visible:bg-violet-700 dark:bg-violet-600 dark:hover:bg-violet-500 dark:focus-visible:bg-violet-500 border-violet-600 hover:border-violet-700 focus-visible:border-violet-700 dark:border-violet-600 dark:hover:border-violet-500 focus-visible:hover:border-violet-500;
+    }
+
+    [b-variant="contained"][b-color="purple"] {
+        @apply text-white bg-purple-600 hover:bg-purple-700 focus-visible:bg-purple-700 dark:bg-purple-600 dark:hover:bg-purple-500 dark:focus-visible:bg-purple-500 border-purple-600 hover:border-purple-700 focus-visible:border-purple-700 dark:border-purple-600 dark:hover:border-purple-500 focus-visible:hover:border-purple-500;
+    }
+
+    [b-variant="contained"][b-color="fuchsia"] {
+        @apply text-white bg-fuchsia-600 hover:bg-fuchsia-700 focus-visible:bg-fuchsia-700 dark:bg-fuchsia-600 dark:hover:bg-fuchsia-500 dark:focus-visible:bg-fuchsia-500 border-fuchsia-600 hover:border-fuchsia-700 focus-visible:border-fuchsia-700 dark:border-fuchsia-600 dark:hover:border-fuchsia-500 focus-visible:hover:border-fuchsia-500;
+    }
+
+    [b-variant="contained"][b-color="pink"] {
+        @apply text-white bg-pink-600 hover:bg-pink-700 focus-visible:bg-pink-700 dark:bg-pink-600 dark:hover:bg-pink-500 dark:focus-visible:bg-pink-500 border-pink-600 hover:border-pink-700 focus-visible:border-pink-700 dark:border-pink-600 dark:hover:border-pink-500 focus-visible:hover:border-pink-500;
+    }
+
+    [b-variant="contained"][b-color="rose"] {
+        @apply text-white bg-rose-600 hover:bg-rose-700 focus-visible:bg-rose-700 dark:bg-rose-600 dark:hover:bg-rose-500 dark:focus-visible:bg-rose-500 border-rose-600 hover:border-rose-700 focus-visible:border-rose-700 dark:border-rose-600 dark:hover:border-rose-500 focus-visible:hover:border-rose-500;
+    }
+
+    [b-variant="outlined"][b-color="slate"] {
+        @apply text-slate-700 dark:text-slate-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-slate-700 focus-visible:bg-slate-700 dark:bg-transparent dark:hover:bg-slate-500 focus-visible:hover:bg-slate-500 border-slate-700 dark:border-slate-500;
+    }
+
+    [b-variant="outlined"][b-color="gray"] {
+        @apply text-gray-700 dark:text-gray-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-gray-700 focus-visible:bg-gray-700 dark:bg-transparent dark:hover:bg-gray-500 focus-visible:hover:bg-gray-500 border-gray-700 dark:border-gray-500;
+    }
+
+    [b-variant="outlined"][b-color="zinc"] {
+        @apply text-zinc-700 dark:text-zinc-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-zinc-700 focus-visible:bg-zinc-700 dark:bg-transparent dark:hover:bg-zinc-500 focus-visible:hover:bg-zinc-500 border-zinc-700 dark:border-zinc-500;
+    }
+
+    [b-variant="outlined"][b-color="neutral"] {
+        @apply text-neutral-700 dark:text-neutral-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-neutral-700 focus-visible:bg-neutral-700 dark:bg-transparent dark:hover:bg-neutral-500 focus-visible:hover:bg-neutral-500 border-neutral-700 dark:border-neutral-500;
+    }
+
+    [b-variant="outlined"][b-color="stone"] {
+        @apply text-stone-700 dark:text-stone-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-stone-700 focus-visible:bg-stone-700 dark:bg-transparent dark:hover:bg-stone-500 focus-visible:hover:bg-stone-500 border-stone-700 dark:border-stone-500;
+    }
+
+    [b-variant="outlined"][b-color="red"] {
+        @apply text-red-700 dark:text-red-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-red-700 focus-visible:bg-red-700 dark:bg-transparent dark:hover:bg-red-500 focus-visible:hover:bg-red-500 border-red-700 dark:border-red-500;
+    }
+
+    [b-variant="outlined"][b-color="orange"] {
+        @apply text-orange-700 dark:text-orange-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-orange-700 focus-visible:bg-orange-700 dark:bg-transparent dark:hover:bg-orange-500 focus-visible:hover:bg-orange-500 border-orange-700 dark:border-orange-500;
+    }
+
+    [b-variant="outlined"][b-color="amber"] {
+        @apply text-amber-700 dark:text-amber-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-amber-700 focus-visible:bg-amber-700 dark:bg-transparent dark:hover:bg-amber-500 focus-visible:hover:bg-amber-500 border-amber-700 dark:border-amber-500;
+    }
+
+    [b-variant="outlined"][b-color="yellow"] {
+        @apply text-yellow-700 dark:text-yellow-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-yellow-700 focus-visible:bg-yellow-700 dark:bg-transparent dark:hover:bg-yellow-500 focus-visible:hover:bg-yellow-500 border-yellow-700 dark:border-yellow-500;
+    }
+
+    [b-variant="outlined"][b-color="lime"] {
+        @apply text-lime-700 dark:text-lime-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-lime-700 focus-visible:bg-lime-700 dark:bg-transparent dark:hover:bg-lime-500 focus-visible:hover:bg-lime-500 border-lime-700 dark:border-lime-500;
+    }
+
+    [b-variant="outlined"][b-color="green"] {
+        @apply text-green-700 dark:text-green-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-green-700 focus-visible:bg-green-700 dark:bg-transparent dark:hover:bg-green-500 focus-visible:hover:bg-green-500 border-green-700 dark:border-green-500;
+    }
+
+    [b-variant="outlined"][b-color="emerald"] {
+        @apply text-emerald-700 dark:text-emerald-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-emerald-700 focus-visible:bg-emerald-700 dark:bg-transparent dark:hover:bg-emerald-500 focus-visible:hover:bg-emerald-500 border-emerald-700 dark:border-emerald-500;
+    }
+
+    [b-variant="outlined"][b-color="teal"] {
+        @apply text-teal-700 dark:text-teal-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-teal-700 focus-visible:bg-teal-700 dark:bg-transparent dark:hover:bg-teal-500 focus-visible:hover:bg-teal-500 border-teal-700 dark:border-teal-500;
+    }
+
+    [b-variant="outlined"][b-color="cyan"] {
+        @apply text-cyan-700 dark:text-cyan-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-cyan-700 focus-visible:bg-cyan-700 dark:bg-transparent dark:hover:bg-cyan-500 focus-visible:hover:bg-cyan-500 border-cyan-700 dark:border-cyan-500;
+    }
+
+    [b-variant="outlined"][b-color="sky"] {
+        @apply text-sky-700 dark:text-sky-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-sky-700 focus-visible:bg-sky-700 dark:bg-transparent dark:hover:bg-sky-500 focus-visible:hover:bg-sky-500 border-sky-700 dark:border-sky-500;
+    }
+
+    [b-variant="outlined"][b-color="blue"] {
+        @apply text-blue-700 dark:text-blue-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-blue-700 focus-visible:bg-blue-700 dark:bg-transparent dark:hover:bg-blue-500 focus-visible:hover:bg-blue-500 border-blue-700 dark:border-blue-500;
+    }
+
+    [b-variant="outlined"][b-color="indigo"] {
+        @apply text-indigo-700 dark:text-indigo-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-indigo-700 focus-visible:bg-indigo-700 dark:bg-transparent dark:hover:bg-indigo-500 focus-visible:hover:bg-indigo-500 border-indigo-700 dark:border-indigo-500;
+    }
+
+    [b-variant="outlined"][b-color="violet"] {
+        @apply text-violet-700 dark:text-violet-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-violet-700 focus-visible:bg-violet-700 dark:bg-transparent dark:hover:bg-violet-500 focus-visible:hover:bg-violet-500 border-violet-700 dark:border-violet-500;
+    }
+
+    [b-variant="outlined"][b-color="purple"] {
+        @apply text-purple-700 dark:text-purple-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-purple-700 focus-visible:bg-purple-700 dark:bg-transparent dark:hover:bg-purple-500 focus-visible:hover:bg-purple-500 border-purple-700 dark:border-purple-500;
+    }
+
+    [b-variant="outlined"][b-color="fuchsia"] {
+        @apply text-fuchsia-700 dark:text-fuchsia-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-fuchsia-700 focus-visible:bg-fuchsia-700 dark:bg-transparent dark:hover:bg-fuchsia-500 focus-visible:hover:bg-fuchsia-500 border-fuchsia-700 dark:border-fuchsia-500;
+    }
+
+    [b-variant="outlined"][b-color="pink"] {
+        @apply text-pink-700 dark:text-pink-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-pink-700 focus-visible:bg-pink-700 dark:bg-transparent dark:hover:bg-pink-500 focus-visible:hover:bg-pink-500 border-pink-700 dark:border-pink-500;
+    }
+
+    [b-variant="outlined"][b-color="rose"] {
+        @apply text-rose-700 dark:text-rose-500 hover:text-white focus-visible:text-white dark:hover:text-white dark:focus-visible:text-white bg-transparent hover:bg-rose-700 focus-visible:bg-rose-700 dark:bg-transparent dark:hover:bg-rose-500 focus-visible:hover:bg-rose-500 border-rose-700 dark:border-rose-500;
+    }
+
+    [b-variant="contained"] [b-icon] svg {
+        @apply fill-white;
+    }
+
+    [b-variant="outlined"][b-color="slate"] [b-icon] * {
+        @apply fill-slate-700 dark:fill-slate-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="gray"] [b-icon] * {
+        @apply fill-gray-700 dark:fill-gray-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="zinc"] [b-icon] * {
+        @apply fill-zinc-700 dark:fill-zinc-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="neutral"] [b-icon] * {
+        @apply fill-neutral-700 dark:fill-neutral-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="stone"] [b-icon] * {
+        @apply fill-stone-700 dark:fill-stone-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="red"] [b-icon] * {
+        @apply fill-red-700 dark:fill-red-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="orange"] [b-icon] * {
+        @apply fill-orange-700 dark:fill-orange-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="amber"] [b-icon] * {
+        @apply fill-amber-700 dark:fill-amber-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="yellow"] [b-icon] * {
+        @apply fill-yellow-700 dark:fill-yellow-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="lime"] [b-icon] * {
+        @apply fill-lime-700 dark:fill-lime-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="green"] [b-icon] * {
+        @apply fill-green-700 dark:fill-green-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="emerald"] [b-icon] * {
+        @apply fill-emerald-700 dark:fill-emerald-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="teal"] [b-icon] * {
+        @apply fill-teal-700 dark:fill-teal-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="cyan"] [b-icon] * {
+        @apply fill-cyan-700 dark:fill-cyan-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="sky"] [b-icon] * {
+        @apply fill-sky-700 dark:fill-sky-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="blue"] [b-icon] * {
+        @apply fill-blue-700 dark:fill-blue-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="indigo"] [b-icon] * {
+        @apply fill-indigo-700 dark:fill-indigo-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="violet"] [b-icon] * {
+        @apply fill-violet-700 dark:fill-violet-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="purple"] [b-icon] * {
+        @apply fill-purple-700 dark:fill-purple-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="fuchsia"] [b-icon] * {
+        @apply fill-fuchsia-700 dark:fill-fuchsia-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="pink"] [b-icon] * {
+        @apply fill-pink-700 dark:fill-pink-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-variant="outlined"][b-color="rose"] [b-icon] * {
+        @apply fill-rose-700 dark:fill-rose-500 hover:fill-white focus-visible:fill-white dark:hover:fill-white dark:focus-visible:fill-white;
+    }
+
+    [b-label] {
+        @apply inline-block first-letter:uppercase font-semibold tracking-widest;
+    }
+}
+
+/**
+*  * ============== TAILWIND UTILITIES ============== 
+*/
+@layer utilities {
+    /* * ===== FONT SIZE ===== */
+    [data-text="xs"] {
+        @apply text-xs;
+    }
+
+    [data-text="sm"] {
+        @apply text-sm;
+    }
+
+    [data-text="base"] {
+        @apply text-base;
+    }
+
+    [data-text="lg"] {
+        @apply text-lg;
+    }
+
+    [data-text="xl"] {
+        @apply text-xl;
+    }
+
+    [data-text="2xl"] {
+        @apply text-2xl;
+    }
+
+    [data-text="3xl"] {
+        @apply text-3xl;
+    }
+
+    [data-text="4xl"] {
+        @apply text-4xl;
+    }
+
+    [data-text="5xl"] {
+        @apply text-5xl;
+    }
+
+    [data-text="6xl"] {
+        @apply text-6xl;
+    }
+
+    [data-text="7xl"] {
+        @apply text-7xl;
+    }
+
+    [data-text="8xl"] {
+        @apply text-8xl;
+    }
+
+    [data-text="9xl"] {
+        @apply text-9xl;
+    }
+
+    /* * ===== BORDER RADIUS ===== */
+    [data-rounded="none"] {
+        @apply rounded-none;
+    }
+
+    [data-rounded="sm"] {
+        @apply rounded-sm;
+    }
+
+    [data-rounded="rounded"] {
+        @apply rounded;
+    }
+
+    [data-rounded="md"] {
+        @apply rounded-md;
+    }
+
+    [data-rounded="lg"] {
+        @apply rounded-lg;
+    }
+
+    [data-rounded="xl"] {
+        @apply rounded-xl;
+    }
+
+    [data-rounded="2xl"] {
+        @apply rounded-2xl;
+    }
+
+    [data-rounded="3xl"] {
+        @apply rounded-3xl;
+    }
+
+    [data-rounded="full"] {
+        @apply rounded-full;
+    }
+
+    /* * ===== DISABLED ===== */
+    [disabled] {
+        @apply opacity-75 cursor-not-allowed;
+    }
+
+    /* * ===== SCROLLBAR ===== */
+    .no-scrollbar::-webkit-scrollbar {
+        @apply w-0;
+    }
+}

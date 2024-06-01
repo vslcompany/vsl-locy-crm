@@ -1,16 +1,14 @@
-import { Spinner } from "@chakra-ui/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "animate.css/animate.min.css";
+
+import { LocyCrmRoutes } from "@/routes";
 
 function App() {
     return (
         <>
-            <h1 className="text-3xl font-bold underline">Vite + React</h1>
-            <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="green.500"
-                size="md"
-            />
+            <LocyCrmRoutes />
+            <ToastContainer />
         </>
     );
 }
