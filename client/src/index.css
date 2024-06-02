@@ -503,3 +503,51 @@
         @apply w-0;
     }
 }
+
+/* * ===== MAIN ===== */
+.section > * {
+    @apply p-4;
+}
+
+/* * ===== NAVIGATION ===== */
+[role="nav"] {
+    @apply flex-1;
+}
+
+[role="nav-list"] {
+    @apply flex sm:flex-col justify-center sm:justify-normal items-center sm:items-stretch gap-2 list-none;
+}
+
+[role="nav-item"] {
+    @apply w-20 h-16;
+}
+
+[role="nav-link"] {
+    @apply w-full h-full flex flex-col gap-1 justify-center items-center rounded-lg hover:text-gray-900 dark:hover:text-white focus:text-gray-900 dark:focus:text-white;
+}
+
+[role="nav-link"].active {
+    @apply bg-[#70BC41] text-white;
+}
+
+[role="nav-link"]:hover [role="nav-icon"],
+[role="nav-link"]:focus [role="nav-icon"] {
+    @apply scale-[1.075];
+}
+
+[role="nav-icon"] {
+    @apply w-6 h-6 transition-transform;
+}
+
+[role="nav-label"] {
+    @apply text-xs font-medium capitalize;
+}
+
+/* * ===== TYPOGRAPHY ===== */
+.title {
+    @apply first-letter:uppercase text-gray-900 text-3xl font-bold;
+}
+
+.subtitle {
+    @apply first-letter:uppercase text-gray-700 text-lg font-medium;
+}
