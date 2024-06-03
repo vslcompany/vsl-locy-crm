@@ -31,53 +31,56 @@ builder.Services.AddCors(option =>
 
 // Add authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidIssuer = jwtIssuer,
-                        ValidAudience = jwtAudience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-                    };
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            // Get the request path
-                            var path = context.HttpContext.Request.Path;
-
-                            // Check if the request path starts with "/auth/" and skip authentication
-                            if (path.StartsWithSegments("/auth/"))
-                            {
-                                context.Token = null; // Clear token to skip authentication
-                            }
-
-                            return Task.CompletedTask;
-                        }
-                    };
-                });
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+    };
+});
 
 // Add db context
 builder.Services.AddDbContext<VslDbContext>(option => option.UseSqlServer(sqlConnectionString));
 
-// Add caching system
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    string connection = builder.Configuration.GetConnectionString("Redis") ?? "";
-    options.Configuration = connection;
-    options.InstanceName = "crm";
-});
+// Add in-memory caching
+builder.Services.AddMemoryCache();
 
 // Add controllers
 builder.Services.AddControllers();
 
 // Add services helper
 builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAuthService<TblSysUser>, AuthService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+
+// Add authorization role
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("ManageEmployee", policy => policy.RequireAssertion(context =>
+        context.User.HasClaim(claim => claim.Type == "Permission" && (claim.Value.Contains("1048576") || claim.Value.Contains("5000")))
+    ));
+    option.AddPolicy("ManageCategory", policy => policy.RequireAssertion(context =>
+        context.User.HasClaim(claim => claim.Type == "Permission" && (claim.Value.Contains("1048576") || claim.Value.Contains("6000")))
+    ));
+    option.AddPolicy("ManageCustomer", policy => policy.RequireAssertion(context =>
+        context.User.HasClaim(claim => claim.Type == "Permission" && (claim.Value.Contains("1048576") || claim.Value.Contains("7000") || claim.Value.Contains("7020")))
+    ));
+    option.AddPolicy("DeliveryCustomer", policy => policy.RequireAssertion(context =>
+        context.User.HasClaim(claim => claim.Type == "Permission" && (claim.Value.Contains("1048576") || claim.Value.Contains("7000") || claim.Value.Contains("7080")))
+    ));
+    option.AddPolicy("ImportCustomer", policy => policy.RequireAssertion(context =>
+        context.User.HasClaim(claim => claim.Type == "Permission" && (claim.Value.Contains("1048576") || claim.Value.Contains("7000") || claim.Value.Contains("7040")))
+    ));
+    option.AddPolicy("ExportCustomer", policy => policy.RequireAssertion(context =>
+        context.User.HasClaim(claim => claim.Type == "Permission" && (claim.Value.Contains("1048576") || claim.Value.Contains("7000") || claim.Value.Contains("7060")))
+    ));
+});
 
 // Add global error handling
 builder.Services.AddTransient<ErrorHandleMiddleware>();
@@ -103,7 +106,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-// app.UseMiddleware<ErrorHandleMiddleware>();
+app.UseMiddleware<ErrorHandleMiddleware>();
 
 app.MapControllers();
 

@@ -1,27 +1,36 @@
-﻿using vsl_crm_api.Interfaces;
+﻿using Microsoft.Extensions.Caching.Memory;
+using vsl_crm_api.Interfaces;
 
 namespace vsl_crm_api.Services
 {
     public class CacheService : ICacheService
     {
-        public Task StringDeleteAsync(string key)
+        private readonly IMemoryCache _memoryCache;
+        private readonly TimeSpan _defaultCacheDuration = TimeSpan.FromMinutes(1);
+
+        public CacheService(IMemoryCache memoryCache)
         {
-            throw new NotImplementedException();
+            _memoryCache = memoryCache;
         }
 
-        public Task<bool> StringExistAsync(string key)
+        public void SetValue(string key, string value, TimeSpan? expiration = null)
         {
-            throw new NotImplementedException();
+            var cacheEntryOptions = new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = expiration ?? _defaultCacheDuration
+            };
+            _memoryCache.Set(key, value, cacheEntryOptions);
         }
 
-        public Task<string?> StringGetAsync(string key)
+        public string? GetValue(string key)
         {
-            throw new NotImplementedException();
+            string? result = _memoryCache.TryGetValue(key, out string? value) ? value : null;
+            return result;
         }
 
-        public Task<bool> StringSetAsync(string key, string value, TimeSpan? expire = null)
+        public void Remove(string key)
         {
-            throw new NotImplementedException();
+            _memoryCache.Remove(key);
         }
     }
 }

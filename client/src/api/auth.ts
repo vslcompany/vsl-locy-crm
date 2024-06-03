@@ -21,6 +21,16 @@ export const forgotPassword = (payload: TForgotPasswordRequest) => {
     return publicInstance.post("/auth/forgot-password", payload);
 };
 
-export const resetPassword = (otp: string) => {
-    return publicInstance.post("/auth/reset-password", { otp });
+export const checkOtp = ({ otp, email }: { otp: string; email: string }) => {
+    return publicInstance.post("/auth/check-otp", { otp, email });
+};
+
+export const resetPassword = ({
+    email,
+    password,
+}: {
+    email: string;
+    password: string;
+}) => {
+    return publicInstance.post("/auth/reset-password", { email, password });
 };

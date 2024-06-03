@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
@@ -10,6 +9,7 @@ using vsl_crm_api.Exceptions;
 using vsl_crm_api.Interfaces;
 using vsl_crm_api.Models.Requests;
 using vsl_crm_api.Models.Response;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace vsl_crm_api.Controllers
 {
@@ -24,15 +24,17 @@ namespace vsl_crm_api.Controllers
         private readonly IAuthService<TblSysUser> _authService;
         private readonly IProfileService _profileService;
         private readonly IConfiguration _config;
-        private readonly IDistributedCache _distributedCache;
-        private readonly double _cachedTime = 1;
+        private readonly IEmailService _emailService;
+        private readonly TimeSpan _cachedTime = TimeSpan.FromMinutes(5);
+        private readonly ICacheService _cacheService;
 
-        public AuthController(IAuthService<TblSysUser> authService, IProfileService profileService, IConfiguration config, IDistributedCache distributedCache)
+        public AuthController(IAuthService<TblSysUser> authService, IProfileService profileService, IConfiguration config, IEmailService emailService, ICacheService cacheService)
         {
             _authService = authService;
             _profileService = profileService;
             _config = config;
-            _distributedCache = distributedCache;
+            _emailService = emailService;
+            _cacheService = cacheService;
         }
 
         /**
@@ -73,6 +75,7 @@ namespace vsl_crm_api.Controllers
                 {
                     throw new ErrorException((int)HttpStatusCode.BadRequest, "Bad request", "Bạn không thể đăng nhập vào hệ thống. Vui lòng liên hệ admin để được giải quyết!");
                 }
+
 
                 // Create token and refresh token
                 var isSecure = HttpContext.Request.IsHttps;
@@ -292,57 +295,53 @@ namespace vsl_crm_api.Controllers
         }
 
         /**
-        * Method -> Url: [POST] -> https://localhost:portnumber/api/v1/auth/change-password
+        * Method -> Url: [POST] -> https://localhost:portnumber/api/v1/auth/forgot-password
         * Description: Người dùng thực hiện đổi mật khẩu
         */
-        [Authorize]
         [HttpPost]
         [Route("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest req)
         {
-            var data = await _authService.getByEmail(req.Email);
-
-            if (data == null)
+            try
             {
-                throw new ErrorException((int)HttpStatusCode.NotFound, "Not found", "Không tồn tại email trong hệ thống!");
-            }
+                var data = await _authService.getByEmail(req.Email);
 
-            string otp = "";
-
-            string keyCache = $"otp-{data.Id}";
-            CancellationToken cancellationToken = default;
-            var cachedOtp = await _distributedCache.GetStringAsync(
-                keyCache,
-                cancellationToken
-            );
-
-            if(string.IsNullOrEmpty(cachedOtp))
-            {
-                // Random otp number code
-                Random generate = new Random();
-                var randNum = generate.Next(1000000);
-                otp = randNum.ToString("D6");
-
-                // Save otp to redis
-                var cachedOptions = new DistributedCacheEntryOptions
+                if (data == null)
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_cachedTime)
+                    throw new ErrorException((int)HttpStatusCode.NotFound, "Not found", "Không tồn tại email trong hệ thống!");
+                }
+
+                // Create OTP
+                var otp = "";
+                var keyCache = $"otp-{req.Email}";
+                // Get caching otp value
+                var cachedOtp = _cacheService.GetValue(keyCache);
+                // If not exist
+                if(string.IsNullOrEmpty(cachedOtp))
+                {
+                    // Random otp number code
+                    Random generate = new Random();
+                    var randNum = generate.Next(1000000);
+                    otp = randNum.ToString("D6");
+
+                    // Save otp to caching
+                    _cacheService.SetValue(keyCache, otp, _cachedTime);
+
+                    // Sending email with new OTP
+                    await _emailService.SendEmailAsync(req.Email, "Mã OTP dành cho việc lấy lại mật khẩu trên LOCY CRM", $"Mã OTP của bạn là: {otp}");
+                } else
+                {
+                    otp = cachedOtp;
+                }
+
+                var response = new Response()
+                {
+                    Status = true,
+                    Message = "Hệ thống đã gửi mã OTP vào gmail của bạn. Vui lòng kiểm tra gmail của bạn!",
+                    Data = null,
                 };
-                try
-                {
-                    await _distributedCache.SetStringAsync(keyCache, otp, cachedOptions, cancellationToken);
-                }
-                catch (Exception ex) {
-                    return BadRequest(ex);
-                }
-            } else
-            {
-                otp = cachedOtp;
-            }
 
-            return Ok(otp);
-            /*try
-            {
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -354,7 +353,101 @@ namespace vsl_crm_api.Controllers
                 {
                     throw new ErrorException((int)HttpStatusCode.InternalServerError, "Internal server error", "Lỗi thực hiện tính năng quên mật khẩu!");
                 }
-            }*/
+            }
+        }
+
+        /**
+        * Method -> Url: [POST] -> https://localhost:portnumber/api/v1/auth/check-otp
+        * Description: Người dùng thực hiện đổi mật khẩu
+        */
+        [HttpPost]
+        [Route("check-otp")]
+        public async Task<IActionResult> CheckOTP([FromBody] CheckOTPRequest req)
+        {
+            try
+            {
+                var keyCache = $"otp-{req.Email}";
+                // Get caching otp value
+                var cachedOtp = _cacheService.GetValue(keyCache);
+
+                if (string.IsNullOrEmpty(cachedOtp))
+                {
+                    throw new ErrorException((int)HttpStatusCode.BadRequest, "Bad request", "Mã OTP không hợp lệ!");
+                }
+
+                var response = new Response()
+                {
+                    Status = true,
+                    Message = "Bạn có thể đặt lại mật khẩu!",
+                    Data = null,
+                };
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                if (e is ErrorException errorException)
+                {
+                    throw errorException;
+                }
+                else
+                {
+                    throw new ErrorException((int)HttpStatusCode.InternalServerError, "Internal server error", "Lỗi kiểm tra OTP reset mật khẩu!");
+                }
+            }
+        }
+
+        /**
+        * Method -> Url: [POST] -> https://localhost:portnumber/api/v1/auth/check-otp
+        * Description: Người dùng thực hiện đổi mật khẩu
+        */
+        [HttpPost]
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest req)
+        {
+            try
+            {
+                var keyCache = $"otp-{req.Email}";
+                // Get caching otp value
+                var cachedOtp = _cacheService.GetValue(keyCache);
+
+                if (!string.IsNullOrEmpty(cachedOtp)) {
+                    // Remove otp in cache
+                    _cacheService.Remove(keyCache);
+                } else
+                {
+                    throw new ErrorException((int)HttpStatusCode.BadRequest, "Bad request", "Lỗi reset mật khẩu!");
+                }
+
+                // hash password
+                var data = await _authService.getByEmail(req.Email);
+
+                if (data != null)
+                {
+                    var hashPassword = _authService.hashPassword(req.Password.ToLower().Trim());
+                    await _authService.changePassword(data, hashPassword);
+                }
+
+                var response = new Response()
+                {
+                    Status = true,
+                    Message = "Bạn đã đặt lại mật khẩu thành công!",
+                    Data = null,
+                };
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                if (e is ErrorException errorException)
+                {
+                    throw errorException;
+                }
+                else
+                {
+                    throw new ErrorException((int)HttpStatusCode.InternalServerError, "Internal server error", "Lỗi reset mật khẩu!");
+                }
+            }
         }
     }
 }

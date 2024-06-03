@@ -44,6 +44,7 @@ namespace vsl_crm_api.Services
         {
             if (data == null) return "";
 
+            // Get data from config file
             var jwtKey = _config["Jwt:Key"] ?? "";
             var jwtIssuer = _config["Jwt:Issuer"] ?? "";
             var jwtAudience = _config["Jwt:Audience"] ?? "";
@@ -53,9 +54,12 @@ namespace vsl_crm_api.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             // Claim in jwt
+            var IDEmployee = data.IdnhanVien != null ? data.IdnhanVien.ToString() : "0";
             var claims = new[]
             {
-                new Claim("Id", data.Id.ToString()),
+               new Claim("Id", data.Id.ToString()),
+               new Claim("Permission", data.Permission ?? ""),
+               new Claim("IDEmployee", IDEmployee ?? "0"),
             };
 
             // Token option
@@ -67,7 +71,6 @@ namespace vsl_crm_api.Services
                 signingCredentials: credentials
             );
 
-            // Create token
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return token;

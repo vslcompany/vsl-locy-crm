@@ -1,18 +1,28 @@
 import { FormEvent, useRef } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "react-query";
 
+import { logIn } from "@/api";
 import { VslLogo } from "@/assets";
 import { Button, GroupInput } from "@/components";
+import { useAuth } from "@/contexts";
+import { TAuthContextProps, TProfileDto } from "@/types";
 import { notification } from "@/utilities";
-import { Link } from "react-router-dom";
 
 const SignIn = () => {
     const usernameRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
 
+    const { updateData }: TAuthContextProps = useAuth();
+
+    const logInMutation = useMutation({
+        mutationFn: logIn,
+    });
+
     /**
      * * Handle events
      */
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
         const payload = {
@@ -25,7 +35,15 @@ const SignIn = () => {
             return;
         }
 
-        console.log(payload);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const res: any = await logInMutation.mutateAsync(payload);
+
+        if (res.status) {
+            // Set token to localStorage
+            localStorage.setItem("token", res.data.token);
+            // Update data to currentUser data local
+            updateData(res.data.payload as unknown as TProfileDto);
+        }
     };
 
     return (
@@ -76,7 +94,7 @@ const SignIn = () => {
                     <Button
                         className="block w-full"
                         label="đăng nhập"
-                        // isLoading={logInMutation.isLoading}
+                        isLoading={logInMutation.isLoading}
                         textIsLoading="đang đăng nhập"
                     />
                 </form>

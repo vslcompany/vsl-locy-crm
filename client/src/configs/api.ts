@@ -5,7 +5,7 @@ import { isExpiredToken, notification } from "@/utilities";
 import { TResponseData } from "@/types";
 
 const baseUrl =
-    import.meta.env.VITE_APP_BASE_URL_API || "https://localhost:7221/api/v1";
+    import.meta.env.VITE_APP_BASE_URL_API || "https://localhost:7129/api/v1";
 
 export const publicInstance = axios.create({
     baseURL: baseUrl,

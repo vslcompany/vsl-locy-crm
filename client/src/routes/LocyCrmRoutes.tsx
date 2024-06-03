@@ -18,6 +18,8 @@ import {
     SignIn,
 } from "@/pages";
 
+import { AuthRoutes, ProtectedRoutes } from "./AdvanceRoutes";
+
 const LocyCrmRoutes = () => {
     return (
         <Suspense
@@ -29,7 +31,7 @@ const LocyCrmRoutes = () => {
         >
             <Routes>
                 {/* Authentication routes */}
-                <Route>
+                <Route element={<AuthRoutes />}>
                     <Route path="/auth/signin" element={<SignIn />} />
                     <Route
                         path="/auth/forgot-password"
@@ -37,7 +39,7 @@ const LocyCrmRoutes = () => {
                     />
                 </Route>
                 {/* Main routes */}
-                <Route>
+                <Route element={<ProtectedRoutes />}>
                     <Route element={<MainWrapper />}>
                         <Route path="/" element={<Dashboard />} />
 
