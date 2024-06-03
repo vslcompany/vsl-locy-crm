@@ -2,9 +2,9 @@
 
 ## Technologies
 
-### Frontend: React, TypeScript, Tailwind, Chakra UI, React query, React router dom, React toastify, axios, ...
+### Frontend: React, TypeScript, Tailwind, Material React Table, React query, React router dom, React toastify, axios, headlessui/react, ...
 
-### Backend: update soon...
+### Backend: Microsoft AspNetCore Authentication JwtBearer, Microsoft EntityFrameworkCore, Microsoft Extensions Caching Memory
 
 ## Features:
 
