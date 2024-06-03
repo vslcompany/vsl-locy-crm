@@ -1,0 +1,6 @@
+@vsl_crm_api_HostAddress = http://localhost:5117
+
+GET {{vsl_crm_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
