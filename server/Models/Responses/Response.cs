@@ -1,4 +1,4 @@
-﻿namespace vsl_crm_api.Models.Response
+﻿namespace vsl_crm_api.Models.Responses
 {
     public class Response
     {

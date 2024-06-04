@@ -3,3 +3,9 @@ export type TResponseData = {
     message: string;
     data: unknown;
 };
+
+export type TApiGetWithPageProps = {
+    start: number;
+    size: number;
+    search: string;
+};

@@ -8,8 +8,7 @@ using vsl_crm_api.Models.Domains;
 using vsl_crm_api.Exceptions;
 using vsl_crm_api.Interfaces;
 using vsl_crm_api.Models.Requests;
-using vsl_crm_api.Models.Response;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using vsl_crm_api.Models.Responses;
 
 namespace vsl_crm_api.Controllers
 {

@@ -38,7 +38,7 @@ const Sidebar = () => {
                             user?.permission.includes("5020") ||
                             user?.permission.includes("5040")) && (
                             <li role="nav-item">
-                                <NavLink to="/personnel" role="nav-link" end>
+                                <NavLink to="/employee" role="nav-link" end>
                                     <FaUsers role="nav-icon" />
                                     <span role="nav-label">nhân viên</span>
                                 </NavLink>

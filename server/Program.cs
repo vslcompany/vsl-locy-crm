@@ -56,8 +56,14 @@ builder.Services.AddControllers();
 // Add services helper
 builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddScoped<IAuthService<TblSysUser>, AuthService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IEmployeeGroupService, EmployeeGroupService>();
 
 // Add authorization role
 builder.Services.AddAuthorization(option =>

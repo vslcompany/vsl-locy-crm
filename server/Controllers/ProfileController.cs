@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using vsl_crm_api.Exceptions;
 using vsl_crm_api.Interfaces;
-using vsl_crm_api.Models.Response;
+using vsl_crm_api.Models.Responses;
 
 namespace vsl_crm_api.Controllers
 {

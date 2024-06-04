@@ -42,7 +42,7 @@ const AuthProvider = ({ children }: TProviderProps) => {
     return (
         <AuthContext.Provider value={value}>
             {isLoading && (
-                <div className="w-screen h-screen flex-center">
+                <div className="w-screen h-screen flex items-center justify-center">
                     <Loading size="3xl" />
                 </div>
             )}
