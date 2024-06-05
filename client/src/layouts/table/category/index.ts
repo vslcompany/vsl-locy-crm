@@ -1,0 +1,12 @@
+export { default as BusinessTable } from "./BusinessTable";
+export { default as CityTable } from "./CityTable";
+export { default as CountryTable } from "./CountryTable";
+export { default as CustomerTypeTable } from "./CustomerTypeTable";
+export { default as DepartmentTable } from "./DepartmentTable";
+export { default as MajorTable } from "./MajorTable";
+export { default as OfficeTable } from "./OfficeTable";
+export { default as OperationalTable } from "./OperationalTable";
+export { default as PortTable } from "./PortTable";
+export { default as PositionTable } from "./PositionTable";
+export { default as TransportationTable } from "./TransportationTable";
+export { default as TypeOfCustomerTable } from "./TypeOfCustomerTable";
