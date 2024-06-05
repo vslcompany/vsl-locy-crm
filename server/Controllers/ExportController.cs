@@ -17,13 +17,13 @@ namespace vsl_crm_api.Controllers
     [ApiController]
     public class ExportController : Controller
     {
-        //private readonly ICustomerService _customerService;
+        private readonly ICustomerService _customerService;
         private readonly IEmployeeService _employeeService;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ExportController(/*ICustomerService customerService,*/ IEmployeeService employeeService, IWebHostEnvironment hostingEnvironment)
+        public ExportController(ICustomerService customerService, IEmployeeService employeeService, IWebHostEnvironment hostingEnvironment)
         {
-            // _customerService = customerService;
+            _customerService = customerService;
             _employeeService = employeeService;
             _hostingEnvironment = hostingEnvironment;
         }
@@ -79,8 +79,8 @@ namespace vsl_crm_api.Controllers
                     while (true)
                     {
                         List<long> idEmployees = await _employeeService.GetListEmployee(idEmployee);
-                        //var data = await _customerService.GetCustomersData(pageNumber, pageSize, permission, idUser, idEmployee, idEmployees);
-                        var data = new List<CustomerDto>();
+                        var data = await _customerService.GetCustomersData(pageNumber, pageSize, permission, idUser, idEmployee, idEmployees);
+
                         if (data != null && !data.Any())
                         {
                             break;
@@ -97,8 +97,8 @@ namespace vsl_crm_api.Controllers
                                 worksheet.Cells[rowIndex, 4].Value = item.NameEN ?? "";
                                 worksheet.Cells[rowIndex, 5].Value = item.AddressVI ?? "";
                                 worksheet.Cells[rowIndex, 6].Value = item.AddressEN ?? "";
-                                // worksheet.Cells[rowIndex, 7].Value = item.IdcityNavigation != null ? (item.IdcityNavigation.NameVI ?? "") : "";
-                                // worksheet.Cells[rowIndex, 8].Value = item.IdquocGiaNavigation != null ? (item.IdquocGiaNavigation.NameVI ?? "") : "";
+                                worksheet.Cells[rowIndex, 7].Value = item.IdcityNavigation != null ? (item.IdcityNavigation.NameVI ?? "") : "";
+                                worksheet.Cells[rowIndex, 8].Value = item.IdquocGiaNavigation != null ? (item.IdquocGiaNavigation.NameVI ?? "") : "";
                                 worksheet.Cells[rowIndex, 9].Value = item.Phone ?? "";
                                 worksheet.Cells[rowIndex, 10].Value = item.Fax ?? "";
                                 worksheet.Cells[rowIndex, 11].Value = item.Email ?? "";
@@ -189,8 +189,8 @@ namespace vsl_crm_api.Controllers
                     while (true)
                     {
                         List<long> idEmployees = await _employeeService.GetListEmployee(idEmployee);
-                        // var data = await _customerService.GetCustomersReceivedData(pageNumber, pageSize, permission, idUser, idEmployee, idEmployees);
-                        var data = new List<CustomerDto>();
+                        var data = await _customerService.GetCustomersReceivedData(pageNumber, pageSize, permission, idUser, idEmployee, idEmployees);
+
                         if (data != null && !data.Any())
                         {
                             break;
@@ -207,8 +207,8 @@ namespace vsl_crm_api.Controllers
                                 worksheet.Cells[rowIndex, 4].Value = item.NameEN ?? "";
                                 worksheet.Cells[rowIndex, 5].Value = item.AddressVI ?? "";
                                 worksheet.Cells[rowIndex, 6].Value = item.AddressEN ?? "";
-                                // worksheet.Cells[rowIndex, 7].Value = item.IdcityNavigation != null ? (item.IdcityNavigation.NameVI ?? "") : "";
-                                // worksheet.Cells[rowIndex, 8].Value = item.IdquocGiaNavigation != null ? (item.IdquocGiaNavigation.NameVI ?? "") : "";
+                                worksheet.Cells[rowIndex, 7].Value = item.IdcityNavigation != null ? (item.IdcityNavigation.NameVI ?? "") : "";
+                                worksheet.Cells[rowIndex, 8].Value = item.IdquocGiaNavigation != null ? (item.IdquocGiaNavigation.NameVI ?? "") : "";
                                 worksheet.Cells[rowIndex, 9].Value = item.Phone ?? "";
                                 worksheet.Cells[rowIndex, 10].Value = item.Fax ?? "";
                                 worksheet.Cells[rowIndex, 11].Value = item.Email ?? "";

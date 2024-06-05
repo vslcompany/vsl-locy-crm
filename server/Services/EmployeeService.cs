@@ -54,10 +54,8 @@ namespace vsl_crm_api.Services
                 q = q.Where(x => x.FlagDelete == true);
             }
 
-            // Pagination
-            q = q.OrderByDescending(c => c.Id).Skip(query.Start).Take(query.Size);
-
             // Get data
+            var total = await q.CountAsync();
             var data = await q.Select(e => new ProfileDto()
             {
                 id = _db.TblSysUsers.Where(x => x.IdnhanVien == e.Id).Select(x => x.Id).FirstOrDefault(),
@@ -91,8 +89,8 @@ namespace vsl_crm_api.Services
                 createDate = e.CreateDate != null ? string.Format("{0:yyyy-MM-dd}", e.CreateDate) : "",
                 editDate = e.EditDate != null ? string.Format("{0:yyyy-MM-dd}", e.EditDate) : "",
                 dateDelete = e.DateDelete != null ? string.Format("{0:yyyy-MM-dd}", e.DateDelete) : ""
-            }).ToListAsync();
-            var total = await q.CountAsync();
+            }).OrderByDescending(c => c.id).Skip(query.Start).Take(query.Size).ToListAsync();
+            
 
             var result = new QueryResponse<ProfileDto>()
             {
