@@ -67,6 +67,8 @@ builder.Services.AddScoped<IEmployeeGroupService, EmployeeGroupService>();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
+builder.Services.AddScoped<IReportService, ReportService>();
+
 // Add authorization role
 builder.Services.AddAuthorization(option =>
 {
