@@ -248,7 +248,7 @@ const EmployeeGroupTable = () => {
         ),
         renderEmptyRowsFallback: () => (
             <div className="px-2 py-6">
-                <p className="section-subtitle first-letter:uppercase">
+                <p className="subtitle first-letter:uppercase">
                     không có dữ liệu
                 </p>
             </div>

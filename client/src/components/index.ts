@@ -5,3 +5,4 @@ export * from "./Loading";
 export * from "./Modal";
 export * from "./Select";
 export * from "./TextArea";
+export * from "./Toggle";
