@@ -11,6 +11,7 @@ import {
     CustomerDetail,
     Dashboard,
     Employee,
+    ForgotPassword,
     NotFound,
     Report,
     Settings,
@@ -32,6 +33,10 @@ const LocyCrmRoutes = () => {
                 {/* Authentication routes */}
                 <Route element={<AuthRoutes />}>
                     <Route path="/auth/signin" element={<SignIn />} />
+                    <Route
+                        path="/auth/forgot-password"
+                        element={<ForgotPassword />}
+                    />
                 </Route>
                 {/* Main routes */}
                 <Route element={<ProtectedRoutes />}>
