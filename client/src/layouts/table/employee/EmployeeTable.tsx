@@ -18,6 +18,7 @@ import { useAuth } from "@/contexts";
 import { useCategory, useDebounced } from "@/hooks";
 import {
     ChangePasswordAccountOfEmployeeModal,
+    ChangePermissionAccountOfEmployeeModal,
     CreateAccountOfEmployeeModal,
     UpdateEmployeeModal,
 } from "@/modals";
@@ -66,6 +67,8 @@ const EmployeeTable = () => {
     const [isOpenCreateAccountModal, setIsOpenCreateAccountModal] =
         useState<boolean>(false);
     const [isOpenChangePasswordModal, setIsOpenChangePasswordModal] =
+        useState<boolean>(false);
+    const [isOpenChangePermissionModal, setIsOpenChangePermissionModal] =
         useState<boolean>(false);
 
     const { positions, departments, offices } = useCategory();
@@ -158,6 +161,16 @@ const EmployeeTable = () => {
         onSuccess: (data) => {
             if (data.status) {
                 closeChangePasswordModal();
+            }
+        },
+    });
+
+    const changePermissionMutation = useMutation({
+        mutationFn: updateEmployee,
+        onSuccess: (data) => {
+            if (data.status) {
+                queryClient.invalidateQueries({ queryKey: "employees" });
+                closeChangePermissionModal();
             }
         },
     });
@@ -262,6 +275,30 @@ const EmployeeTable = () => {
             return result.status as boolean;
         },
         [changePasswordMutation]
+    );
+
+    const openChangePermissionModal = useCallback(
+        (data: TUpdateEmployeeRequest) => {
+            setIsOpenChangePermissionModal(true);
+            setDataSelectedUpdate(data);
+        },
+        []
+    );
+
+    const closeChangePermissionModal = useCallback(() => {
+        setIsOpenChangePermissionModal(false);
+        setDataSelectedUpdate(null);
+    }, []);
+
+    const handleChangePermission = useCallback(
+        async (data: TUpdateEmployeeRequest) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const result: any = await changePermissionMutation.mutateAsync(
+                data
+            );
+            return result.status as boolean;
+        },
+        [changePermissionMutation]
     );
 
     useEffect(() => {
@@ -386,7 +423,7 @@ const EmployeeTable = () => {
                         <MoreHoriz />
                     </MenuButton>
                     <MenuItems
-                        className="bg-white border border-gray-400 p-2 space-y-2 rounded-md"
+                        className="bg-white border border-gray-400 p-2 space-y-2 rounded-md z-[1000]"
                         anchor="bottom end"
                     >
                         {query.trangThai && (
@@ -519,7 +556,38 @@ const EmployeeTable = () => {
                             <MenuItem>
                                 <div
                                     className="first-letter:uppercase data-[focus]:bg-green-100 p-2 cursor-pointer"
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                        const { idNhanVien } = row.original;
+                                        const data = tableData.find(
+                                            (e) => e.idNhanVien === idNhanVien
+                                        ) as TProfileDto;
+                                        const payload: TUpdateEmployeeRequest =
+                                            {
+                                                id: data.id,
+                                                username: data.username,
+                                                password: "",
+                                                active: data.active,
+                                                permission: data.permission,
+                                                idNhanVien: data.idNhanVien,
+                                                idChucVu: data.idChucVu,
+                                                idPhongBan: data.idPhongBan,
+                                                idVanPhong: data.idVanPhong,
+                                                manhanvien: data.manhanvien,
+                                                hoTenVI: data.hoTenVI,
+                                                hoTenEN: data.hoTenEN,
+                                                namsinh: data.namsinh,
+                                                gioitinh: data.gioitinh,
+                                                quequan: data.quequan,
+                                                diachi: data.diachi,
+                                                soCMT: data.soCMT,
+                                                noiCapCMT: data.noiCapCMT,
+                                                ngayCapCMT: data.ngayCapCMT,
+                                                photoURL: data.photoURL,
+                                                ghichu: data.ghichu,
+                                                soLuongKH: data.soLuongKH,
+                                            };
+                                        openChangePermissionModal(payload);
+                                    }}
                                 >
                                     cập nhật quyền
                                 </div>
@@ -767,6 +835,19 @@ const EmployeeTable = () => {
                     labelButtonOk="đổi mật khẩu"
                     prevData={dataSelectedUpdate}
                     isLoading={changePasswordMutation.isLoading}
+                />
+            )}
+            {(user?.permission.includes("1048576") ||
+                user?.permission.includes("5000")) && (
+                <ChangePermissionAccountOfEmployeeModal
+                    isOpen={isOpenChangePermissionModal}
+                    onClose={closeChangePermissionModal}
+                    onSubmit={handleChangePermission}
+                    title="Phân quyền tài khoản"
+                    labelButtonCancel="huỷ"
+                    labelButtonOk="phân quyền"
+                    prevData={dataSelectedUpdate}
+                    isLoading={changePermissionMutation.isLoading}
                 />
             )}
         </>

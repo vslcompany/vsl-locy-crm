@@ -36,7 +36,7 @@ const ChangePasswordAccountOfEmployeeModal = ({
                 id: data.id,
                 username: data.username,
                 password: passwordRef.current?.value ?? "",
-                active: true,
+                active: data.active,
                 permission: data.permission,
                 idNhanVien: data.idNhanVien,
                 idChucVu: data.idChucVu,

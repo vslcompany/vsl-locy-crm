@@ -39,7 +39,7 @@ const UpdateEmployeeModal = ({
                 id: data.id,
                 username: data.username,
                 password: "",
-                active: true,
+                active: data.active,
                 permission: data.permission,
                 idNhanVien: data.idNhanVien,
                 idChucVu: data.idChucVu,
