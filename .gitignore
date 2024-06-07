@@ -24,6 +24,9 @@ dist-ssr
 *.sw?
 .idx
 
+# Environment files
+.env
+
 # Lock files
 package-lock.json
 yarn.lock

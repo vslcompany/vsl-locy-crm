@@ -69,5 +69,6 @@ namespace vsl_crm_api.Controllers
                     throw new ErrorException((int)HttpStatusCode.InternalServerError, "Internal server error", "Lỗi lấy dữ liệu báo cáo công việc thực hiện!");
                 }
             }
+        }
     }
 }

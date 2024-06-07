@@ -66,6 +66,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeGroupService, EmployeeGroupService>();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerInfoService, CustomerInfoService>();
 
 builder.Services.AddScoped<IReportService, ReportService>();
 
