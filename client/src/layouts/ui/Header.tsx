@@ -94,7 +94,7 @@ const Header = () => {
                                         >
                                             <IoMdSettings className="text-xl" />
                                             <span className="capitalize">
-                                                đổi mật khẩu
+                                                cài đặt
                                             </span>
                                         </Link>
                                     </MenuItem>
