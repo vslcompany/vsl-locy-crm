@@ -27,9 +27,7 @@ export const useCategory = () => {
     const { data: positionRes } = useQuery({
         queryKey: "position",
         queryFn: getAllPositions,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
@@ -38,9 +36,7 @@ export const useCategory = () => {
     const { data: departmentsRes } = useQuery({
         queryKey: "departments",
         queryFn: getAllDepartments,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
@@ -49,9 +45,7 @@ export const useCategory = () => {
     const { data: officesRes } = useQuery({
         queryKey: "offices",
         queryFn: getAllOffices,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
@@ -60,9 +54,7 @@ export const useCategory = () => {
     const { data: countriesRes } = useQuery({
         queryKey: "countries",
         queryFn: getAllCountries,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

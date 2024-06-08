@@ -66,9 +66,7 @@ const ReportWorkTable = () => {
         onError: () => {
             setIsFiltering(false);
         },
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             query.startDate.trim() !== "" &&
             query.endDate.trim() !== "" &&

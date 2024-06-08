@@ -37,14 +37,12 @@ const UpdateCustomerOperationalModal = ({
     const { data: contactsRes } = useQuery({
         queryKey: ["contacts", data?.idCustomer],
         queryFn: () => getAllCustomerContacts(data?.idCustomer as number),
-        staleTime: Infinity,
-        cacheTime: Infinity,
         onSuccess: (data) => {
             if (data.status) {
                 setContacts(data.data as unknown as TCustomerContactDto[]);
             }
         },
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "" &&
@@ -57,14 +55,12 @@ const UpdateCustomerOperationalModal = ({
     const { data: operationalsRes } = useQuery({
         queryKey: "operationals",
         queryFn: getAllOperationals,
-        staleTime: Infinity,
-        cacheTime: Infinity,
         onSuccess: (data) => {
             if (data.status) {
                 setOperationals(data.data as unknown as TOperationalDto[]);
             }
         },
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

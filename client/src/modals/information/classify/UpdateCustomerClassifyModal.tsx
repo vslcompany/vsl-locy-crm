@@ -30,9 +30,7 @@ const UpdateCustomerClassifyModal = ({
     const { data: typesRes } = useQuery({
         queryKey: "types",
         queryFn: getAllTypeOfCustomers,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

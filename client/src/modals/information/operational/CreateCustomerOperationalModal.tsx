@@ -41,9 +41,7 @@ const CreateCustomerOperationalModal = ({
     const { data: contactsRes } = useQuery({
         queryKey: ["contacts", idCustomer],
         queryFn: () => getAllCustomerContacts(idCustomer as number),
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "" &&
@@ -53,9 +51,7 @@ const CreateCustomerOperationalModal = ({
     const { data: operationalsRes } = useQuery({
         queryKey: "operationals",
         queryFn: getAllOperationals,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

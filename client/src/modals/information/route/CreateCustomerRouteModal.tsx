@@ -82,9 +82,7 @@ const CreateCustomerRouteModal = ({
                 setTransportaions(data.data as unknown as TTransportationDto[]);
             }
         },
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

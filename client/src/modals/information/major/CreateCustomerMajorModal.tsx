@@ -30,9 +30,7 @@ const CreateCustomerMajorModal = ({
     const { data: majorsRes } = useQuery({
         queryKey: "majors",
         queryFn: getAllMajors,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

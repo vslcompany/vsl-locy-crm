@@ -27,9 +27,7 @@ const CreateEmployeeGroupModal = ({
     const { data: employeesRes, refetch } = useQuery({
         queryKey: "employeesGroup",
         queryFn: getAllEmployeesNoGroup,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

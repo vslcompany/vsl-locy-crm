@@ -134,7 +134,6 @@ const Customer = () => {
             user?.permission as string,
             user?.username.toLowerCase() as string
         );
-        console.log(lists);
         const result = listTypes.filter((item) => {
             return lists.includes(item.label.toLowerCase());
         });

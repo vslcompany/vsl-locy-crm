@@ -103,9 +103,7 @@ const CustomerFilterModal = ({
     const { data: majorsRes } = useQuery({
         queryKey: "majorsQuery",
         queryFn: getAllMajors,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
@@ -115,9 +113,7 @@ const CustomerFilterModal = ({
     const { data: typesRes } = useQuery({
         queryKey: "types",
         queryFn: getAllTypeOfCustomers,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
@@ -127,9 +123,7 @@ const CustomerFilterModal = ({
     const { data: customerTypesRes } = useQuery({
         queryKey: "customerTypesQuery",
         queryFn: getAllCustomerTypes,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
@@ -139,9 +133,7 @@ const CustomerFilterModal = ({
     const { data: operationalsRes } = useQuery({
         queryKey: "operationalsQuery",
         queryFn: getAllOperationals,
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",

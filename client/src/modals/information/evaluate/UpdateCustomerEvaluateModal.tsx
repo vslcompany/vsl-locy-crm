@@ -35,9 +35,7 @@ const UpdateCustomerEvaluateModal = ({
                 setTypes(data.data as unknown as TCustomerTypeDto[]);
             }
         },
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
