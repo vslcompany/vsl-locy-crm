@@ -36,9 +36,7 @@ const CreateCustomer = () => {
     const { data: businessesRes } = useQuery({
         queryKey: ["businesses"],
         queryFn: getAllBusinesses,
-        cacheTime: Infinity,
-        staleTime: Infinity,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
         enabled:
             localStorage.getItem("token") != null &&
             localStorage.getItem("token") != "",
